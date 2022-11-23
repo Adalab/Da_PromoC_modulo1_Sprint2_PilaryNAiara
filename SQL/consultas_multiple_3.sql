@@ -41,7 +41,11 @@ order by company_name;
 #Estamos muy interesados en saber como ha sido la evolución de la venta de Konbu a lo largo del tiempo.
 # Nuestro jefe nos pide que nos muestre todos los pedidos que contengan "Konbu".
 
-select order_details.order_id, order_details.product_id, products.products_name 
- FROM order_details inner join	products 
- HAVING (poduct_id);
+select order_details.order_id, orders.employee_id, orders.order_date, orders.required_date,
+	orders.shipped_date, orders.ship_via, orders.freight, orders.ship_name, orders.ship_address,
+    orders.ship_city, orders.ship_region, orders.ship_postal_code, orders.ship_country
+FROM order_details inner join products
+ON order_details.product_id = products.product_id
+WHERE products.product_name = 'Konbu';
 
+ order_details.product_id, products.product_name 

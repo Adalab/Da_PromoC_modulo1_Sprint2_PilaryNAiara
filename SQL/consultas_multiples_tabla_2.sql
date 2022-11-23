@@ -41,11 +41,9 @@ WHERE customers.country = "UK";
 # la ubicación, nombre, y apellido tanto de las empleadas como de las jefas. 
 # Investiga el resultado, ¿sabes decir quién es el director?
 
-SELECT empleadas.city AS CiudadEmpleada, COUNT(CONCAT(empleadas.first_name, " ", empleadas.last_name)) AS NombreyApellidoEmpleada,
-jefas.city AS CiudadJefa, jefas.first_name AS NombreJefa, jefas.last_name AS ApellidoJefa
-FROM employees AS empleadas, employees AS jefas
-WHERE empleadas.employee_id = jefas.reports_to;
--- GROUP BY CONCAT(empleadas.first_name, " ", empleadas.last_name);
+select jefa.city as JefaCity, jefa.first_name as JefaNombre, jefa.last_name as JefaApellido, 
+	empleada.city as EmpleadaCity, empleada.first_name as EmpleadaNombre, empleada.last_name as EmpleadaApellido
+from employees as jefa, employees as empleada
+where jefa.employee_id = empleada.reports_to;
 
 
-# Error Code: 1055. Expression #1 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'northwind.empleadas.city' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
