@@ -29,13 +29,12 @@ FROM orders where employee_id IN (
 #Extraed todas las empresas que no han comprado en el año 1997
 #En este caso, nuestro jefe quiere saber cuántas empresas no han comprado en el año 1997.
 
-select distinct ship_name as company_name, ship_country as country 
-FROM orders
-WHERE year(order_date) not in (
-	SELECT YEAR (order_date)	
-	FROM orders
-    WHERE year (order_date) = '1997')
-order by company_name; 
+select company_name, country
+from customers
+where customer_id not in(
+	select customer_id
+    from orders
+    where year(order_date) = 1997);
     
 #Extraed toda la información de los pedidos donde tengamos "Konbu"
 #Estamos muy interesados en saber como ha sido la evolución de la venta de Konbu a lo largo del tiempo.
@@ -44,8 +43,9 @@ order by company_name;
 select order_details.order_id, orders.employee_id, orders.order_date, orders.required_date,
 	orders.shipped_date, orders.ship_via, orders.freight, orders.ship_name, orders.ship_address,
     orders.ship_city, orders.ship_region, orders.ship_postal_code, orders.ship_country
-FROM order_details inner join products
-ON order_details.product_id = products.product_id
+FROM orders inner join order_details
+on orders.order_id = order_details.order_id
+inner join products
+on order_details.product_id = products.product_id
 WHERE products.product_name = 'Konbu';
 
- order_details.product_id, products.product_name 
