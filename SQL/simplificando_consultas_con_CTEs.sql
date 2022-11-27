@@ -41,13 +41,13 @@ ORDER BY cteEjer3.customer_id;
 Mejoremos la query anterior. En este caso queremos saber el número de facturas emitidas por cada cliente. */
 
 WITH cteEjer4 AS(
-	SELECT c.customer_id, c.company_name, COUNT(o.order_id)
+	SELECT c.customer_id, c.company_name, o.order_id
     FROM customers AS c
-    INNER JOIN orders AS o
-    ON c.customer_id = o.customer_id
-    GROUP BY c.customer_id)
-SELECT cteEjer4.customer_id, cteEjer4.company_name, cteEjer4.order_id
+    inner join orders AS o
+    ON c.customer_id = o.customer_id)
+SELECT cteEjer4.customer_id, cteEjer4.company_name, count(cteEjer4.order_id)
 FROM cteEjer4
+group by cteEjer4.customer_id, cteEjer4.company_name
 ORDER BY cteEjer4.customer_id;
 
 
@@ -55,8 +55,10 @@ ORDER BY cteEjer4.customer_id;
 Necesitaréis extraer la suma de las cantidades por cada producto y calcular la media. */
 
 
-select product_id, sum(quantity), avg(quantity), sum(quantity)/avg(quantity) as media_quantity
-from order_details
-group by product_id;
+select products.product_name,  avg(order_details.quantity) as media 
+from order_details inner join products
+on order_details.product_id = products.product_id
+group by order_details.product_id
+order by  products.product_name;
 
 
