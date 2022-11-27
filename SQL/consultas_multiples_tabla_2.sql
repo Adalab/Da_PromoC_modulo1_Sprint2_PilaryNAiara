@@ -42,8 +42,12 @@ WHERE customers.country = "UK";
 # Investiga el resultado, ¿sabes decir quién es el director?
 
 select jefa.city as JefaCity, jefa.first_name as JefaNombre, jefa.last_name as JefaApellido, 
-	empleada.city as EmpleadaCity, empleada.first_name as EmpleadaNombre, empleada.last_name as EmpleadaApellido
+	 empleada.city as EmpleadaCity, empleada.first_name as EmpleadaNombre, empleada.last_name as EmpleadaApellido
 from employees as jefa, employees as empleada
 where jefa.employee_id = empleada.reports_to;
+ 
+select first_name, last_name
+from employees
+where reports_to = null;
 
 
