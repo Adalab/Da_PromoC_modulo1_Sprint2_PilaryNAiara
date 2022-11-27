@@ -45,4 +45,23 @@ on orders.order_id = order_details.order_id
 where customers.country = 'UK'
 group by year(orders.order_date), customers.company_name;
 
-# 4. 
+/* 4. BONUS: Pedidos que han realizado cada compañía y su fecha:
+Después de estas solicitudes desde UK y gracias a la utilidad de los resultados que se han obtenido, 
+desde la central nos han pedido una consulta que indique el nombre de cada compañia cliente junto con 
+cada pedido que han realizado y su fecha. */
+select orders.order_id, customers.company_name, orders.order_date
+from orders inner join customers
+on orders.customer_id = customers.customer_id;
+
+
+/* 5. BONUS: Tipos de producto vendidos:
+Ahora nos piden una lista con cada tipo de producto que se han vendido, sus categorías, nombre de la categoría 
+y el nombre del producto, y el total de dinero por el que se ha vendido cada tipo de producto 
+(teniendo en cuenta los descuentos). Pista Necesitaréis usar 3 joins. */
+select categories.category_id, categories.category_name, products.product_name, 
+	sum(order_details.unit_price * order_details.quantity - order_details.unit_price * order_details.quantity * discount) as ProductSales
+from categories inner join products
+on categories.category_id = products.category_id
+inner join order_details
+on products.product_id = order_details.product_id
+group by categories.category_id, categories.category_name, products.product_name;
