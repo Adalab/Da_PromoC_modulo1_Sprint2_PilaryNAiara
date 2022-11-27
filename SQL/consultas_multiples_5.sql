@@ -3,11 +3,11 @@
 ##1.Extraed los pedidos con el máximo "order_date" para cada empleado.
 #saber la fecha de los pedidos más recientes que ha gestionado cada empleado. Para eso nos pide que lo hagamos con una query correlacionada.
 
-SELECT p1.order_id ,p1.customer_id, p1.employee_id, p1.order_date, p1.required_date
-from products as p1
+SELECT p1.order_id, p1.customer_id, p1.employee_id, MAX(p1.order_date), p1.required_date
+from orders as p1
 where p1.customer_id = 
-		(Select MAX(p2.order_date)
-        From products as p2
+		(Select p2.customer_id
+        From orders as p2
         where p1.order_id = p2.order_id);
         
 ##2.Extraed el precio unitario máximo (unit_price) de cada producto vendido.
