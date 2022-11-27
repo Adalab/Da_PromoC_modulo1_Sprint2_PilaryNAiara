@@ -18,11 +18,11 @@ pedidos cuya fecha de envío estaba vacía, por lo que tenemos que mejorar la
 consulta en este aspecto. También nos piden que ordenemos los resultados 
 según el ID de empleado para que la visualización sea más sencilla. */
 
-SELECT order_id AS Count_Order, employee_id, MAX(freight) AS Max_freight
+SELECT count(order_id) AS Count_Order, employee_id, MAX(freight) AS Max_freight
 FROM orders
-WHERE shipped_date NOT '0000-00-00 00:00:00'
-GROUP BY employee_id
-ORDER BY employee_id;
+WHERE shipped_date != '0000-00-00 00:00:00'
+GROUP BY employee_id;
+
 
 /* Ejercicio 3: Números de pedidos por día:
 El siguiente paso en el análisis de los pedidos va a consistir en conocer 
