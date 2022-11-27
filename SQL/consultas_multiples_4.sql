@@ -33,7 +33,28 @@ WHERE city LIKE "A%" or city like "B%";
 #En este caso, nuestro objetivo es devolver los mismos campos que en la query anterior el número de total de pedidos que han hecho todas las ciudades 
 #que empiezan por "L".
 
-select company_name, contact_name, city
-From customers
-Where city LIKE "L%"
-group by count(orde_id) as Numero_pedidos;
+select customers.city, customers.company_name, customers.contact_name, count(order_details.order_id)
+from customers inner join orders
+on customers.customer_id = orders.customer_id
+inner join order_details
+on orders.order_id = order_details.order_id
+where customers.city like "L%"
+group by customers.city, customers.company_name, customers.contact_name
+order by customers.company_name;
+
+
+/* 5. Todos los clientes cuyo "contact_title" no incluya "Sales".
+Nuestro objetivo es extraer los clientes que no tienen el contacto "Sales" en su "contact_title". 
+Extraer el nombre de contacto, su posisión (contact_title) y el nombre de la compañia. */
+
+select contact_name, contact_title, company_name
+from customers
+where contact_title not like "%Sales%";
+
+
+/* 6. Todos los clientes que no tengan una "A" en segunda posición en su nombre.
+Devolved unicamente el nombre de contacto. */
+
+select contact_name
+from customers
+where contact_name not like "_a%";
